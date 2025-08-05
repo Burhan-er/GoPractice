@@ -2,12 +2,12 @@ package synchronization
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 )
-
 func adWork(idx int) {
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * time.Duration(rand.Int()))
 	fmt.Printf("[GOROUTİNE %d]\n",idx)
 }
 func WithWaitGroup(){
