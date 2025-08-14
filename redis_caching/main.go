@@ -20,8 +20,8 @@ func main() {
 	type Person struct {
 		ID     string `json:"id"`
 		Name   string `json:"name"`
-		Gender Gender`json:"gender"`
-		Age    string`json:"age"`
+		Gender Gender `json:"gender"`
+		Age    string `json:"age"`
 	}
 
 	client := redis.NewClient(&redis.Options{
@@ -31,7 +31,7 @@ func main() {
 
 	ping, err := client.Ping(context.Background()).Result()
 
-	if err != nil {
+	if err != nil {d
 		fmt.Printf("ping err: %s", err.Error())
 	}
 
@@ -40,29 +40,29 @@ func main() {
 	personID := uuid.NewString()
 
 	person := Person{
-		ID: personID,
-		Name: "David Laid",
+		ID:     personID,
+		Name:   "David Laid",
 		Gender: MALE,
-		Age: "18",
+		Age:    "18",
 	}
 
 	personJson, err := json.Marshal(person)
 
 	if err != nil {
-		fmt.Printf("json marshal err: %s\n",err.Error())
+		fmt.Printf("json marshal err: %s\n", err.Error())
 	}
 
-	err = client.Set(context.Background(), "person",string(personJson),0).Err()
+	err = client.Set(context.Background(), "person", string(personJson), 0).Err()
 
 	if err != nil {
-		fmt.Printf("client.Set error: %s\n",err.Error())
+		fmt.Printf("client.Set error: %s\n", err.Error())
 	}
 
-	value, err := client.Get(context.Background(),"person").Result()
+	value, err := client.Get(context.Background(), "person").Result()
 	if err != nil {
-		fmt.Printf("client.Get Error: %s\n",err.Error())
+		fmt.Printf("client.Get Error: %s\n", err.Error())
 	}
 
-	fmt.Printf("valuefrom redis : %s",value)
+	fmt.Printf("valuefrom redis : %s", value)
 
 }
